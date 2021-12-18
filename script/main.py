@@ -1,4 +1,4 @@
-from nltk import WhitespaceTokenizer, bigrams, FreqDist, trigrams
+from nltk import WhitespaceTokenizer, FreqDist, trigrams
 from collections import defaultdict
 from random import choice, choices
 
@@ -40,7 +40,7 @@ def format_text_line(line: list) -> str:
 
 
 def process_trigrams() -> Trigrams:
-    filename = input()
+    filename = "corpus.txt"
     with open(filename, "r", encoding="utf-8") as corpus:
         wtk = WhitespaceTokenizer()  # object that makes tokens
         return Trigrams(wtk.tokenize(corpus.read()))  # trigrams are generated from the tokenized results
