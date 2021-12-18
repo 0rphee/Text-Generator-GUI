@@ -15,9 +15,13 @@ class Trigrams:
             del head1, head2
             self.trigram_freq[head_tup][tail]: int = num
 
-    def get_tail(self, head_input: list):
+    def get_tail(self, head_input: list) -> str:
         head_input: tuple = tuple(head_input)
-        return choices(tuple(self.trigram_freq[head_input].keys()), tuple(self.trigram_freq[head_input].values()))[0]
+        try:
+            return choices(tuple(self.trigram_freq[head_input].keys()), tuple(self.trigram_freq[head_input].values()))[
+                0]
+        except Exception:
+            return "not found"
 
     def get_initial_rand_head(self) -> list:  # gets rand word, recourses if not capitalized and with ending char
         rand_head: tuple = choice(list(self.trigram_freq.keys()))
