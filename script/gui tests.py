@@ -3,7 +3,7 @@ from main import process_trigrams
 
 
 def main():
-    def delete_excess_children():
+    def delete_excess_children_widgets():
         children = root.winfo_children()
         if len(children) >= 3:
             children[-1].destroy()
@@ -13,13 +13,13 @@ def main():
         new_text: str = entry.get().strip()
         split_text = new_text.split()
         label_value.set(new_text)
-        delete_excess_children()
+        delete_excess_children_widgets()
         if len(split_text) >= 2 and new_text[-1] != " ":
             tail = my_trigrams.get_tail(split_text[-2:])
             if tail != "not found":
                 label_value.set(new_text + " " + tail)
             else:
-                temp_label = tk.Label(root, text="not matches in model")
+                temp_label = tk.Label(root, text="No matches in model")
                 temp_label.pack()
 
     my_trigrams = process_trigrams()
@@ -34,9 +34,9 @@ def main():
 
     # creation of both label and entry with shared variable
     entry = tk.Entry(root, textvariable=entry_value)
-    entry.pack()
     label = tk.Label(root, textvariable=label_value)
     label.pack()
+    entry.pack()
 
     root.mainloop()
 
