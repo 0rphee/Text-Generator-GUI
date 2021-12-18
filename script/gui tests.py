@@ -3,20 +3,30 @@ from main import process_trigrams
 
 
 def main():
+    def delete_excess_children():
+        children = root.winfo_children()
+        if len(children) >= 3:
+            children[-1].destroy()
+
     def my_tracer(*args):
         del args
-        new_text: str = entry.get()
+        new_text: str = entry.get().strip()
         split_text = new_text.split()
         label_value.set(new_text)
-        if len(split_text) == 2:
-            tail = my_trigrams.get_tail(split_text)
+        delete_excess_children()
+        if len(split_text) >= 2 and new_text[-1] != " ":
+            tail = my_trigrams.get_tail(split_text[-2:])
             if tail != "not found":
                 label_value.set(new_text + " " + tail)
+            else:
+                temp_label = tk.Label(root, text="not matches in model")
+                temp_label.pack()
 
     my_trigrams = process_trigrams()
 
     root = tk.Tk(className="My tkinter app")
     # creation of linked variable, from entry to label
+
     entry_value = tk.StringVar()
     entry_value.trace("w", my_tracer)
 
