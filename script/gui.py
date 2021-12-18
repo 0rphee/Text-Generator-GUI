@@ -1,5 +1,5 @@
 import tkinter as tk
-from main import process_trigrams
+from model import process_trigrams
 
 
 def main():
