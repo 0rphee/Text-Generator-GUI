@@ -8,6 +8,7 @@ def main():
         if len(children) >= 3:
             children[-1].destroy()
 
+    # noinspection PyUnusedLocal
     def my_tracer(*args):
         del args
         new_text: str = entry.get().strip()
@@ -15,14 +16,14 @@ def main():
         label_value.set(new_text)
         delete_excess_children_widgets()
         if len(split_text) >= 2 and new_text[-1] != " ":
-            tail = my_trigrams.get_tail(split_text[-2:])
+            tail = trigram_model.get_tail(split_text[-2:])
             if tail != "not found":
                 label_value.set(new_text + " " + tail)
             else:
                 temp_label = tk.Label(root, text="No matches in model")
                 temp_label.pack()
 
-    my_trigrams = process_trigrams()
+    trigram_model = process_trigrams()
 
     root = tk.Tk(className="My tkinter app")
     # creation of linked variable, from entry to label
