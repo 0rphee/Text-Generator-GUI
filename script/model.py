@@ -25,7 +25,9 @@ class Trigrams:
             if single_tail:
                 return weighed_tail
             else:
-                return weighed_tail, (tails, freqs)
+                pair_tail = list(zip(tails, freqs))
+                pair_tail.sort(key=lambda x: x[1], reverse=True)
+                return weighed_tail, pair_tail
         except Exception as my:
             print(my, "exception")
             return "not found"
