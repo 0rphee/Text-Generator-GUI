@@ -1,3 +1,4 @@
+from typing import Union
 from nltk import WhitespaceTokenizer, FreqDist, trigrams
 from collections import defaultdict
 from random import choice, choices
@@ -15,12 +16,18 @@ class Trigrams:
             del head1, head2
             self.trigram_freq[head_tup][tail]: int = num
 
-    def get_tail(self, head_input: list) -> str:
+    def get_n_tail(self, head_input: list, single_tail: bool) -> Union[str, tuple]:
         head_input: tuple = tuple(head_input)
         try:
-            return choices(tuple(self.trigram_freq[head_input].keys()), tuple(self.trigram_freq[head_input].values()))[
-                0]
-        except Exception:
+            tails, freqs = self.trigram_freq[head_input].keys(), self.trigram_freq[head_input].values()
+            tails, freqs = tuple(tails), tuple(freqs)
+            weighed_tail = choices(tails, freqs)[0]
+            if single_tail:
+                return weighed_tail
+            else:
+                return weighed_tail, (tails, freqs)
+        except Exception as my:
+            print(my, "exception")
             return "not found"
 
     def get_initial_rand_head(self) -> list:  # gets rand word, recourses if not capitalized and with ending char
@@ -33,7 +40,7 @@ class Trigrams:
     def generate_line(self) -> list:
         text_line: list = self.get_initial_rand_head()
         while True:
-            next_token = self.get_tail(text_line[-2:])
+            next_token = self.get_n_tail(text_line[-2:], True)
             text_line.append(next_token)
             if len(text_line) >= 5 and next_token[-1] in Trigrams.ending_chars:
                 return text_line
