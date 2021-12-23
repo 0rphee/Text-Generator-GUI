@@ -133,3 +133,4 @@ dmypy.json
 script/tests.py
 script/gui.bin
 /script/gui.build/
+/script/gui.app/
