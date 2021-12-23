@@ -29,7 +29,6 @@ class Trigrams:
                 pair_tail.sort(key=lambda x: x[1], reverse=True)
                 return weighed_tail, pair_tail
         except Exception as my:
-            print(my, "exception")
             return "not found"
 
     def get_initial_rand_head(self) -> list:  # gets rand word, recourses if not capitalized and with ending char
